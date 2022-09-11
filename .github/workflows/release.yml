@@ -29,7 +29,7 @@ jobs:
         with:
           commit: "ci: ${{ github.ref_name }} release"
           title: "ci: ${{ github.ref_name }} release"
-          createGithubReleases: false
+          createGithubReleases: true
           publish: yarn changeset publish
           version: yarn changeset version
         env:
