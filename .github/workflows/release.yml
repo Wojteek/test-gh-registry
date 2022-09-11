@@ -35,6 +35,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish
         if: steps.changesets.outputs.hasChangesets == 'false'
-        run: yarn workspaces foreach npm publish --tolerate-republish --no-private
+        run: yarn workspaces foreach --no-private npm publish --tolerate-republish
         env:
           GH_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
