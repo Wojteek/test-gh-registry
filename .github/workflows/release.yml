@@ -8,8 +8,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  snapshot:
-    name: Snapshot
+  release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
