@@ -23,7 +23,6 @@ jobs:
           cache: "yarn"
       - name: Install
         run: yarn install --immutable
-      - run: yarn changeset status --verbose
       - name: Create
         id: changesets
         uses: changesets/action@v1
