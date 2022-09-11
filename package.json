@@ -1,6 +1,7 @@
 {
   "name": "test-gh-registry",
   "packageManager": "yarn@3.2.3",
+  "private": true,
   "workspaces": [
     "./app/*",
     "./tools/*"
