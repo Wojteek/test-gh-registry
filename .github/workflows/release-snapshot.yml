@@ -1,10 +1,10 @@
-name: Release
+name: Snapshot
 
 on:
   workflow_dispatch:
 
 concurrency:
-  group: release-${{ github.ref_name }}
+  group: snapshot-${{ github.ref_name }}
   cancel-in-progress: true
 
 jobs:
@@ -27,11 +27,11 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          commit: "ci: ${{ github.ref_name }} release"
-          title: "ci: ${{ github.ref_name }} release"
+          commit: "ci: ${{ github.ref_name }} snapshot"
+          title: "ci: ${{ github.ref_name }} snapshot"
           createGithubReleases: false
-          publish: yarn changeset publish
-          version: yarn changeset version
+          publish: yarn changeset publish --no-git-tag --tag ${{ github.ref_name }}
+          version: yarn changeset version --snapshot ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
