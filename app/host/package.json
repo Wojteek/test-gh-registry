@@ -1,0 +1,13 @@
+{
+  "name": "@wojteek/app-host",
+  "version": "0.0.0",
+  "files": [
+    "README.md"
+  ],
+  "repository": "https://github.com/Wojteek/test-gh-registry",
+  "private": true,
+  "dependencies": {
+    "@wojteek/tool-fetcher": "workspace:*",
+    "fastify": "^4.5.3"
+  }
+}
