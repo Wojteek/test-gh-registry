@@ -23,15 +23,18 @@ jobs:
           cache: "yarn"
       - name: Install
         run: yarn install --immutable
-      - name: Create
+      - name: Create PR
         id: changesets
         uses: changesets/action@v1
         with:
           commit: "ci: ${{ github.ref_name }} release"
           title: "ci: ${{ github.ref_name }} release"
           createGithubReleases: true
-          publish: yarn changeset publish
           version: yarn changeset version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: yarn workspaces foreach npm publish --tolerate-republish
+        env:
+          GH_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
