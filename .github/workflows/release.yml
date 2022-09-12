@@ -39,8 +39,8 @@ jobs:
         env:
           GH_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create tags
-        if: ${{ success() }}
+        if: steps.changesets.outputs.hasChangesets == 'false'
         run: yarn changeset tag
       - name: Push tags
-        if: ${{ success() }}
+        if: steps.changesets.outputs.hasChangesets == 'false'
         run: git push --follow-tags
