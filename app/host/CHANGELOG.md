@@ -1,5 +1,11 @@
 # @wojteek/app-host
 
+## 1.1.1
+
+### Patch Changes
+
+- b255b44: fasfsa fasf safasf asf
+
 ## 1.1.0
 
 ### Minor Changes
