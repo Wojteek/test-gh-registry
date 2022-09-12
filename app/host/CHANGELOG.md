@@ -1,5 +1,7 @@
 # @wojteek/app-host
 
+## 0.0.0-snapshot-20220912205349
+
 ## 1.1.1
 
 ### Patch Changes
