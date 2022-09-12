@@ -23,6 +23,13 @@ jobs:
           cache: "yarn"
       - name: Install
         run: yarn install --immutable
+      - name: Creating .npmrc
+        run: |
+          cat << EOF > "$HOME/.npmrc"
+            //npm.pkg.github.com/:_authToken=$NPM_TOKEN
+          EOF
+        env:
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create PR
         id: changesets
         uses: changesets/action@v1
@@ -30,17 +37,19 @@ jobs:
           commit: "ci: ${{ github.ref_name }} release"
           title: "ci: ${{ github.ref_name }} release"
           createGithubReleases: true
+          publish: yarn changeset publish
           version: yarn changeset version
         env:
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish
-        if: steps.changesets.outputs.hasChangesets == 'false'
-        run: yarn workspaces foreach --no-private npm publish --tolerate-republish
-        env:
-          GH_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create tags
-        if: steps.changesets.outputs.hasChangesets == 'false'
-        run: yarn changeset tag
-      - name: Push tags
-        if: steps.changesets.outputs.hasChangesets == 'false'
-        run: git push --follow-tags
+#      - name: Publish
+#        if: steps.changesets.outputs.hasChangesets == 'false'
+#        run: yarn workspaces foreach --no-private npm publish --tolerate-republish
+#        env:
+#          GH_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Create tags
+#        if: steps.changesets.outputs.hasChangesets == 'false'
+#        run: yarn changeset tag
+#      - name: Push tags
+#        if: steps.changesets.outputs.hasChangesets == 'false'
+#        run: git push --follow-tags
