@@ -1,5 +1,11 @@
 # @wojteek/app-host
 
+## 1.1.0
+
+### Minor Changes
+
+- 2aeb619: test minor change
+
 ## 1.0.0
 
 ### Major Changes
