@@ -43,14 +43,3 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      - name: Publish
-#        if: steps.changesets.outputs.hasChangesets == 'false'
-#        run: yarn workspaces foreach --no-private npm publish --tolerate-republish
-#        env:
-#          GH_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      - name: Create tags
-#        if: steps.changesets.outputs.hasChangesets == 'false'
-#        run: yarn changeset tag
-#      - name: Push tags
-#        if: steps.changesets.outputs.hasChangesets == 'false'
-#        run: git push --follow-tags
