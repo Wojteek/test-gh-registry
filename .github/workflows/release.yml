@@ -23,14 +23,6 @@ jobs:
           cache: "yarn"
       - name: Install
         run: yarn install --immutable
-      - name: Creating .npmrc
-        run: |
-          cat << EOF > "$HOME/.npmrc"
-            @wojteek:registry=https://npm.pkg.github.com/
-            //npm.pkg.github.com/:_authToken=$GITHUB_TOKEN
-          EOF
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create PR
         id: changesets
         uses: changesets/action@v1
@@ -38,8 +30,13 @@ jobs:
           commit: "ci: ${{ github.ref_name }} release"
           title: "ci: ${{ github.ref_name }} release"
           createGithubReleases: true
-          publish: yarn changeset publish
+          publish: yarn workspaces foreach --no-private npm publish --tolerate-republish
           version: yarn changeset version
         env:
-          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Tags
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: |
+          yarn changeset tag
+          git push --follow-tags
