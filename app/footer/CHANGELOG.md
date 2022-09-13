@@ -1,5 +1,11 @@
 # @wojteek/app-footer
 
+## 2.1.0
+
+### Patch Changes
+
+- [`73cd7a9`](https://github.com/Wojteek/test-gh-registry/commit/73cd7a92e97b8cb8d588b5d332de95849d4a117c) Thanks [@Wojteek](https://github.com/Wojteek)! - test minor changes
+
 ## 2.0.0
 
 ### Major Changes
