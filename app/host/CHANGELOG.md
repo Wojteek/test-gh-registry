@@ -1,5 +1,11 @@
 # @wojteek/app-host
 
+## 0.0.0-snapshot-20220913153552
+
+### Patch Changes
+
+- [`d40c6bb`](https://github.com/Wojteek/test-gh-registry/commit/d40c6bbe2a0609c68bf42833f8af36e066cf22cf) Thanks [@Wojteek](https://github.com/Wojteek)! - asfas fsaf asf saf
+
 ## 2.1.0
 
 ### Minor Changes
