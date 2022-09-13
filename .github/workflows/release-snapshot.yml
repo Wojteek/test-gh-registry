@@ -30,11 +30,8 @@ jobs:
           commit: "ci: ${{ github.ref_name }} snapshot"
           title: "ci: ${{ github.ref_name }} snapshot"
           createGithubReleases: false
+          publish: yarn workspaces foreach --no-private npm publish --tolerate-republish --tag ${{ github.ref_name }}
           version: yarn changeset version --snapshot ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish
-        if: steps.changesets.outputs.hasChangesets == 'false'
-        run: yarn workspaces foreach --no-private npm publish --tolerate-republish --tag ${{ github.ref_name }}
-        env:
           GH_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
