@@ -48,10 +48,13 @@ jobs:
             let myError = '';
             
             console.log(packages);
+            console.log(tool);
             
             const newTagRegex = /New tag:\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
             const skipRegex = /Skipping tag \(already exists\):\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
             const releasedPackages = [];
+            const packagesByName = new Map(packages.map((pkg) => [pkg.packageJson.name, pkg]));
+            console.log('packagesByName', packagesByName);
             const options = {
               cwd,
               listeners: {
