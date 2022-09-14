@@ -2581,6 +2581,7 @@ __metadata:
   dependencies:
     "@changesets/changelog-github": ^0.4.6
     "@changesets/cli": ^2.24.4
+    "@manypkg/get-packages": ^1.1.3
   languageName: unknown
   linkType: soft
 
