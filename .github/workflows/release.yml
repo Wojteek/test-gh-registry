@@ -39,15 +39,12 @@ jobs:
         id: tags
         if: steps.changesets.outputs.hasChangesets == 'false'
         uses: actions/github-script@v6
-        env:
-          NODE_OPTIONS: '--require "./.pnp.cjs"'
         with:
           script: |
+            const { createRequire } = __original_require__('module');
             const cwd = process.cwd();
-            const getPackagePath = __original_require__.resolve('@manypkg/get-packages', { paths: [cwd] }) || '@manypkg/get-packages';
-            console.log(getPackagePath);
-            
-            const { getPackages } = require(getPackagePath) 
+            const _require = createRequire(cwd);
+            const { getPackages } = _require('@manypkg/get-packages') 
             
             let myError = '';
             console.log(getPackages);
@@ -84,6 +81,8 @@ jobs:
             await exec.exec('yarn', ['changeset', 'tag'], options);
             
             console.log('releasedPackages', releasedPackages);
+        env:
+          NODE_OPTIONS: '--require "./.pnp.cjs"'
       - name: Push tags
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
