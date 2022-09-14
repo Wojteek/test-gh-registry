@@ -41,7 +41,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(process.env);
+            console.log(process);
             const { getPackages } = require('@manypkg/get-packages') 
             const cwd = process.cwd();
             const { packages, tool } = await getPackages(cwd);
