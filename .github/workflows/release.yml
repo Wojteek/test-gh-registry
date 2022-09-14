@@ -41,7 +41,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { getPackages } = require('@manypkg/get-packages');
+            const { getPackages } = __original_require__('@manypkg/get-packages');
             
             let myError = '';
             
