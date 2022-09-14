@@ -41,19 +41,16 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            console.log(process.env);
             const { getPackages } = require('@manypkg/get-packages') 
             const cwd = process.cwd();
             const { packages, tool } = await getPackages(cwd);
-            
-            let myError = '';
-            
-            console.log(packages);
-            console.log(tool);
-            
             const newTagRegex = /New tag:\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
             const releasedPackages = [];
             const packagesByName = new Map(packages.map((pkg) => [pkg.packageJson.name, pkg]));
-            console.log('packagesByName', packagesByName);
+            
+            let myError = '';
+            
             const options = {
               cwd,
               listeners: {
@@ -80,8 +77,8 @@ jobs:
             await exec.exec('yarn', ['changeset', 'tag'], options);
             
             console.log('releasedPackages', releasedPackages);
-        env:
-          NODE_OPTIONS: --require="./.pnp.cjs"
+        #env:
+          #NODE_OPTIONS: --require="./.pnp.cjs"
       - name: Push tags
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
