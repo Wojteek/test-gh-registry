@@ -44,12 +44,17 @@ jobs:
             let myError = '';
             
             const newTagRegex = /New tag:\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
+            const skipRegex = /Skipping tag \(already exists\):\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
             const releasedPackages = [];
             const options = {
               cwd: process.cwd(),
               listeners: {
                 stdout: (data) => {
                   const match = data.toString().match(newTagRegex);
+                  const matchSkip = data.toString().match(skipRegex);
+            
+                  console.log(matchSkip);
+                  
                   if (match === null) {
                     return;
                   }
