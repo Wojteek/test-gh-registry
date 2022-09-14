@@ -81,7 +81,7 @@ jobs:
             
             console.log('releasedPackages', releasedPackages);
         env:
-          NODE_OPTIONS: '--require "./.pnp.cjs"'
+          NODE_OPTIONS: --require="./.pnp.cjs"
       - name: Push tags
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
