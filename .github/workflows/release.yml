@@ -41,7 +41,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { createRequire ) = __original_require__('module');
+            const { createRequire } = __original_require__('module');
             const cwd = process.cwd();
             const _require = createRequire(cwd);
             const { getPackages } = _require('@manypkg/get-packages'); 
