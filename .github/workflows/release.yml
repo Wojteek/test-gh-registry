@@ -42,7 +42,7 @@ jobs:
         with:
           script: |
             const cwd = process.cwd();
-            const getPackagePath = require.resolve('@manypkg/get-packages', { paths: [cwd] }) || '@manypkg/get-packages';
+            const getPackagePath = __original_require__.resolve('@manypkg/get-packages', { paths: [cwd] }) || '@manypkg/get-packages';
             console.log(getPackagePath);
             
             const { getPackages } = require(getPackagePath) 
