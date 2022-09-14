@@ -35,8 +35,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo ${{ toJSON(steps.changesets.outputs) }}
-        if: steps.changesets.outputs.hasChangesets == 'false'
       - name: Tags
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
