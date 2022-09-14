@@ -38,9 +38,30 @@ jobs:
       - name: Tags
         id: tags
         if: steps.changesets.outputs.hasChangesets == 'false'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const exec = require('@actions/exec');
+            let myOutput = '';
+            let myError = '';
+            
+            const options = {};
+            options.listeners = {
+              stdout: (data: Buffer) => {
+                myOutput += data.toString();
+              },
+              stderr: (data: Buffer) => {
+                myError += data.toString();
+              },
+            };
+            options.cwd = process.cwd();
+            
+            console.log('myOutput', myOutput);
+            
+            await exec.exec('yarn', ['changeset', 'tag'], options);
+      - name: Push tags
+        if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
-          OUTPUT="$(yarn changeset tag)"
-          echo "::set-output name=GENERATED_TAGS::$OUTPUT"
           git push --follow-tags
       - name: Create release
         if: steps.changesets.outputs.hasChangesets == 'false'
