@@ -38,6 +38,6 @@ jobs:
       - name: Tags
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
-          ${{ steps.changesets.outputs }}
+          echo ${{ steps.changesets.outputs }}
           yarn changeset tag
           git push --follow-tags
