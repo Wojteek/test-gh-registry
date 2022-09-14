@@ -36,7 +36,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Tags
+        id: tags
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
-          yarn changeset tag
+          echo "::set-output name=CHANGESET_TAG::$(yarn changeset tag)"
           git push --follow-tags
+      - run: echo ${{ steps.tags.outputs.CHANGESET_TAG }}
+        if: steps.changesets.outputs.hasChangesets == 'false'
