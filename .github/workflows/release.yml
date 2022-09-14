@@ -41,10 +41,8 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { createRequire } = __original_require__('module');
             const cwd = process.cwd();
-            const _require = createRequire(cwd);
-            const getPackagePath = _require.resolve('@manypkg/get-packages');
+            const getPackagePath = require.resolve('@manypkg/get-packages', { paths: [cwd] }) || '@manypkg/get-packages';
             console.log(getPackagePath);
             
             const { getPackages } = require(getPackagePath) 
