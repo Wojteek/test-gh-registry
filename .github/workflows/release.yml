@@ -42,10 +42,10 @@ jobs:
         with:
           script: |
             const { getPackages } = require('@manypkg/get-packages') 
+            const cwd = process.cwd();
+            const { packages, tool } = await getPackages(cwd);
             
             let myError = '';
-            console.log(getPackages);
-            const { packages, tool } = await getPackages(cwd);
             
             console.log(packages);
             
