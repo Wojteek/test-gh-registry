@@ -40,7 +40,7 @@ jobs:
         if: steps.changesets.outputs.hasChangesets == 'false'
         uses: actions/github-script@v6
         env:
-          NODE_OPTIONS: '--require "./.pnp.cjs'
+          NODE_OPTIONS: '--require "./.pnp.cjs"'
         with:
           script: |
             const cwd = process.cwd();
