@@ -39,7 +39,10 @@ jobs:
         id: tags
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
-          echo "::set-output name=CHANGESET_TAG::$(yarn changeset tag)"
+          echo "::set-output name=GENERATED_TAGS::$(yarn changeset tag)"
           git push --follow-tags
-      - run: echo ${{ steps.tags.outputs.CHANGESET_TAG }}
+      - name: Create release
         if: steps.changesets.outputs.hasChangesets == 'false'
+        run: node ./scripts/create-release.js
+        env:
+          GENERATED_TAGS: ${{ steps.tags.outputs.GENERATED_TAGS }}
