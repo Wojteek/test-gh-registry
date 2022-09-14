@@ -85,4 +85,4 @@ jobs:
           echo ${{ steps.tags.outputs.releasedPackages }}
           node ./scripts/create-release.js
         env:
-          GENERATED_TAGS: ${{ steps.tags.outputs.releasedPackages }}
+          RELEASED_PACKAGES: ${{ steps.tags.outputs.releasedPackages }}
