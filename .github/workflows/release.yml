@@ -62,7 +62,7 @@ jobs:
                     return;           
                   }
             
-                  releasedPackages.push(pkgName);
+                  releasedPackages.push(`${pkg.packageJson.name}@${pkg.packageJson.version}`);
                 },
                 stderr: (data) => {
                   throw new Error(data.toString());
