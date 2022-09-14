@@ -47,9 +47,6 @@ jobs:
             const newTagRegex = /New tag:\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
             const releasedPackages = [];
             const packagesByName = new Map(packages.map((pkg) => [pkg.packageJson.name, pkg]));
-            
-            let myError = '';
-            
             const options = {
               cwd,
               listeners: {
@@ -68,22 +65,24 @@ jobs:
                   releasedPackages.push(pkgName);
                 },
                 stderr: (data) => {
-                  myError += data.toString();
+                  throw new Error(data.toString());
                 },
               },
             };
             
             await exec.exec('yarn', ['changeset', 'tag'], options);
             
-            console.log('releasedPackages', releasedPackages);
+            core.setOutput('releasedPackages', JSON.stringify(releasedPackages));
         env:
-          NODE_OPTIONS: --require="./.pnp.cjs" --experimental-top-level-await
+          NODE_OPTIONS: --require="./.pnp.cjs"
       - name: Push tags
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
           git push --follow-tags
       - name: Create release
         if: steps.changesets.outputs.hasChangesets == 'false'
-        run: node ./scripts/create-release.js
+        run: |
+          echo ${{ steps.tags.outputs.releasedPackages }}
+          node ./scripts/create-release.js
         env:
-          GENERATED_TAGS: ${{ steps.tags.outputs.GENERATED_TAGS }}
+          GENERATED_TAGS: ${{ steps.tags.outputs.releasedPackages }}
