@@ -51,7 +51,6 @@ jobs:
             console.log(tool);
             
             const newTagRegex = /New tag:\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
-            const skipRegex = /Skipping tag \(already exists\):\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
             const releasedPackages = [];
             const packagesByName = new Map(packages.map((pkg) => [pkg.packageJson.name, pkg]));
             console.log('packagesByName', packagesByName);
@@ -60,17 +59,17 @@ jobs:
               listeners: {
                 stdout: (data) => {
                   const match = data.toString().match(newTagRegex);
-                  const matchSkip = data.toString().match(skipRegex);
-            
-                  console.log(matchSkip);
-            
                   if (match === null) {
                     return;
                   }
             
-                  console.log('match', match);
+                  const pkgName = match[1];
+                  const pkg = packagesByName.get(pkgName);
+                  if (!pkg) {
+                    return;           
+                  }
             
-                  releasedPackages.push(match[1]);
+                  releasedPackages.push(pkgName);
                 },
                 stderr: (data) => {
                   myError += data.toString();
