@@ -41,7 +41,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const exec = require('@actions/exec');
             let myOutput = '';
             let myError = '';
             
