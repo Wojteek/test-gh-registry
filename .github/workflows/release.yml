@@ -41,14 +41,14 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { createRequire ) = require('module');
+            const { createRequire ) = __original_require__('module');
             const cwd = process.cwd();
             const _require = createRequire(cwd);
             const { getPackages } = _require('@manypkg/get-packages'); 
             
             let myError = '';
             console.log(getPackages);
-            let { packages, tool } = await getPackages(cwd);
+            const { packages, tool } = await getPackages(cwd);
             
             console.log(packages);
             
@@ -63,7 +63,7 @@ jobs:
                   const matchSkip = data.toString().match(skipRegex);
             
                   console.log(matchSkip);
-                  
+            
                   if (match === null) {
                     return;
                   }
