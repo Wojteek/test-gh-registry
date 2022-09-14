@@ -64,9 +64,9 @@ jobs:
               },
             };
             
-            console.log('releasedPackages', releasedPackages);
-            
             await exec.exec('yarn', ['changeset', 'tag'], options);
+            
+            console.log('releasedPackages', releasedPackages);
       - name: Push tags
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
