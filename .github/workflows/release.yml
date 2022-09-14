@@ -45,6 +45,8 @@ jobs:
             const cwd = process.cwd();
             const _require = createRequire(cwd);
             const getPackagePath = _require.resolve('@manypkg/get-packages');
+            console.log(getPackagePath);
+            
             const { getPackages } = require(getPackagePath) 
             
             let myError = '';
