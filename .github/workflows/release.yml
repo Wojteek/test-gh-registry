@@ -41,7 +41,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(process);
             const { getPackages } = require('@manypkg/get-packages') 
             const cwd = process.cwd();
             const { packages, tool } = await getPackages(cwd);
@@ -77,8 +76,8 @@ jobs:
             await exec.exec('yarn', ['changeset', 'tag'], options);
             
             console.log('releasedPackages', releasedPackages);
-        #env:
-          #NODE_OPTIONS: --require="./.pnp.cjs"
+        env:
+          NODE_OPTIONS: --require="./.pnp.cjs" --experimental-top-level-await
       - name: Push tags
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
