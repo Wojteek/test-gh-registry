@@ -41,13 +41,21 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            const { getPackages } = require('@manypkg/get-packages');
+            
             let myError = '';
+            
+            console.log(getPackages);
+            const cwd = process.cwd();
+            let { packages, tool } = await getPackages(cwd);
+            
+            console.log(packages);
             
             const newTagRegex = /New tag:\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
             const skipRegex = /Skipping tag \(already exists\):\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
             const releasedPackages = [];
             const options = {
-              cwd: process.cwd(),
+              cwd,
               listeners: {
                 stdout: (data) => {
                   const match = data.toString().match(newTagRegex);
