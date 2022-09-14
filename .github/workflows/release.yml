@@ -41,12 +41,13 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { getPackages } = __original_require__('@manypkg/get-packages');
+            const { createRequire ) = require('module');
+            const cwd = process.cwd();
+            const _require = createRequire(cwd);
+            const { getPackages } = _require('@manypkg/get-packages'); 
             
             let myError = '';
-            
             console.log(getPackages);
-            const cwd = process.cwd();
             let { packages, tool } = await getPackages(cwd);
             
             console.log(packages);
