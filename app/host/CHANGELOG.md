@@ -1,5 +1,11 @@
 # @wojteek/app-host
 
+## 2.2.0
+
+### Minor Changes
+
+- [`495c6c9`](https://github.com/Wojteek/test-gh-registry/commit/495c6c939cf927565e31f951e8fddf36aa869cfe) Thanks [@Wojteek](https://github.com/Wojteek)! - fas fasf asfasf
+
 ## 2.1.2
 
 ## 2.1.1
