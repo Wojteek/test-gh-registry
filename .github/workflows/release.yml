@@ -47,7 +47,7 @@ jobs:
             const releasedPackages = await runTagCommand({ cwd, exec });
             
             core.setOutput('releasedPackages', JSON.stringify(releasedPackages));
-          
+            console.log(releasedPackages);
             await Promise.all(releasedPackages.map((pkg) => createRelease(octokit, pkg, github.context)));
         env:
           NODE_OPTIONS: --require="./.pnp.cjs" --experimental-loader="./.pnp.loader.mjs"
@@ -55,10 +55,3 @@ jobs:
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
           git push --follow-tags
-      - name: Create release
-        if: steps.changesets.outputs.hasChangesets == 'false'
-        run: |
-          echo ${{ steps.tags.outputs.releasedPackages }}
-          node ./scripts/create-release.mjs
-        env:
-          RELEASED_PACKAGES: ${{ steps.tags.outputs.releasedPackages }}
