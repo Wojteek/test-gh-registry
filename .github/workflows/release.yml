@@ -51,7 +51,7 @@ jobs:
             await Promise.all(releasedPackages.map((pkg) => createRelease({ octokit: github, pkg, context })));
         env:
           NODE_OPTIONS: --require="./.pnp.cjs" --experimental-loader="./.pnp.loader.mjs"
-      - name: Push tags
-        if: steps.changesets.outputs.hasChangesets == 'false'
-        run: |
-          git push --follow-tags
+#      - name: Push tags
+#        if: steps.changesets.outputs.hasChangesets == 'false'
+#        run: |
+#          git push --follow-tags
