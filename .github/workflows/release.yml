@@ -42,8 +42,8 @@ jobs:
         with:
           script: |
             const cwd = process.cwd();
-            const { getChangesetCreatedTags } = await import('${{ github.workspace }}/scripts/get-released-packages.mjs');
-            const releasedPackages = await getChangesetCreatedTags({ cwd, exec });
+            const { runTagCommand } = await import('${{ github.workspace }}/scripts/changesets.mjs');
+            const releasedPackages = await runTagCommand({ cwd, exec });
             
             core.setOutput('releasedPackages', JSON.stringify(releasedPackages));
         env:
