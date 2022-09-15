@@ -41,7 +41,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { getPackages } = await import('@manypkg/get-packages') 
+            const { getPackages } = require('@manypkg/get-packages') 
             const { createExec } = await import('${{ github.workspace }}/scripts/gh-exec.mjs');
             const cwd = process.cwd();
             const { packages } = await getPackages(cwd);
