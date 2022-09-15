@@ -40,7 +40,7 @@ export function getChangelogEntry(changelog, version) {
   for (let i = 0; i < nodes.length; i++) {
     let node = nodes[i];
     if (node.type === "heading") {
-      const stringified = mdastToString(node);
+      const stringified = mdastToString.toString(node);
       const match = stringified.toLowerCase().match(/(major|minor|patch)/);
 
       if (match !== null) {
