@@ -5,7 +5,6 @@ export function createExec(exec) {
 
         return Object.freeze({
             call: await exec.exec(command, args, {
-                cwd,
                 listeners: {
                     stdout: (data) => {
                         stdout += data.toString();
