@@ -49,21 +49,21 @@ jobs:
             const releasedPackages = [];
             const packagesByName = new Map(packages.map((pkg) => [pkg.packageJson.name, pkg]));
             const execAsync = createExec(exec);
-            const { stdout } = await execAsync('yarn', ['changeset', 'tag'], {
+            const changesetTagOutput = await execAsync('yarn', ['changeset', 'tag'], {
               cwd,
             });
             
-            for (const line of stdout.split('\n')) {
+            for (const line of changesetTagOutput.stdout.split('\n')) {
               console.log('test', line);
               const match = line.match(newTagRegex);
               if (match === null) {
-                return;
+                continue;
               }
             
               const pkgName = match[1];
               const pkg = packagesByName.get(pkgName);
               if (!pkg) {
-                return;
+                continue;
               }
             
               releasedPackages.push(pkg);
