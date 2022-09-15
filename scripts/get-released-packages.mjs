@@ -1,28 +1,28 @@
-const { getPackages } = await import('@manypkg/get-packages')
-const { createExec } = await import('${{ github.workspace }}/scripts/gh-exec.mjs');
-const cwd = process.cwd();
-const { packages } = await getPackages(cwd);
-const newTagRegex = /New tag:\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
-const releasedPackages = [];
-const packagesByName = new Map(packages.map((pkg) => [pkg.packageJson.name, pkg]));
-const execAsync = createExec(exec);
-const { stdout } = await execAsync('yarn', ['changeset', 'tag'], {
-    cwd,
-});
+import { getPackages } from '@manypkg/get-packages';
+import { createExec } from './gh-exec.mjs';
 
-for (const line of stdout.split('\n')) {
-    const match = line.match(newTagRegex);
-    if (match === null) {
-        return;
+export async function getChangesetCreatedTags({ exec, cwd }) {
+    const { packages } = await getPackages(cwd);
+    const execAsync = createExec(exec);
+    const releasedPackages = [];
+    const newTagRegex = /New tag:\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
+    const packagesByName = new Map(packages.map((pkg) => [pkg.packageJson.name, pkg]));
+    const changesetTagCommandOutput = await execAsync('yarn', ['changeset', 'tag'], { cwd });
+
+    for (const line of changesetTagCommandOutput.stdout.split('\n')) {
+        const match = line.match(newTagRegex);
+        if (match === null) {
+            continue;
+        }
+
+        const pkgName = match[1];
+        const pkg = packagesByName.get(pkgName);
+        if (!pkg) {
+            continue;
+        }
+
+        releasedPackages.push(pkg);
     }
 
-    const pkgName = match[1];
-    const pkg = packagesByName.get(pkgName);
-    if (!pkg) {
-        return;
-    }
-
-    releasedPackages.push(pkg);
+    return releasedPackages;
 }
-
-core.setOutput('releasedPackages', JSON.stringify(releasedPackages));

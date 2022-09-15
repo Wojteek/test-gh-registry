@@ -41,37 +41,13 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { getPackages } = require('@manypkg/get-packages');
-            const { createExec } = await import('${{ github.workspace }}/scripts/gh-exec.mjs');
             const cwd = process.cwd();
-            const { packages } = await getPackages(cwd);
-            const newTagRegex = /New tag:\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
-            const releasedPackages = [];
-            const packagesByName = new Map(packages.map((pkg) => [pkg.packageJson.name, pkg]));
-            const execAsync = createExec(exec);
-            const changesetTagOutput = await execAsync('yarn', ['changeset', 'tag'], {
-              cwd,
-            });
-            
-            for (const line of changesetTagOutput.stdout.split('\n')) {
-              console.log('test', line);
-              const match = line.match(newTagRegex);
-              if (match === null) {
-                continue;
-              }
-            
-              const pkgName = match[1];
-              const pkg = packagesByName.get(pkgName);
-              if (!pkg) {
-                continue;
-              }
-            
-              releasedPackages.push(pkg);
-            }
+            const { getChangesetCreatedTags } = await import('${{ github.workspace }}/scripts/get-released-packages.mjs');
+            const releasedPackages = await getChangesetCreatedTags({ cwd, exec });
             
             core.setOutput('releasedPackages', JSON.stringify(releasedPackages));
         env:
-          NODE_OPTIONS: --require="./.pnp.cjs"
+          NODE_OPTIONS: --require="./.pnp.cjs" --experimental-loader="./.pnp.loader.mjs"
       - name: Push tags
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
