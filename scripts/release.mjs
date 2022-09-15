@@ -17,13 +17,13 @@ export async function createRelease({ octokit, pkg, context }) {
     console.log('tagName', tagName);
     console.log(changelogEntry);
 
-    // await octokit.repos.createRelease({
-    //   name: tagName,
-    //   tag_name: tagName,
-    //   body: changelogEntry.content,
-    //   prerelease: pkg.packageJson.version.includes('-'),
-    //   ...context.repo,
-    // });
+    await octokit.repos.createRelease({
+      name: tagName,
+      tag_name: tagName,
+      body: changelogEntry.content,
+      prerelease: pkg.packageJson.version.includes('-'),
+      ...context.repo,
+    });
   } catch (err) {
     if (err.code !== 'ENOENT') {
       throw err;
