@@ -48,7 +48,7 @@ jobs:
             
             core.setOutput('releasedPackages', JSON.stringify(releasedPackages));
             console.log(releasedPackages);
-            await Promise.all(releasedPackages.map((pkg) => createRelease(octokit, pkg, github.context)));
+            await Promise.all(releasedPackages.map((pkg) => createRelease({ octokit, pkg, github.context })));
         env:
           NODE_OPTIONS: --require="./.pnp.cjs" --experimental-loader="./.pnp.loader.mjs"
       - name: Push tags
