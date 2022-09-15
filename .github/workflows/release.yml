@@ -54,6 +54,7 @@ jobs:
             });
             
             for (const line of stdout.split('\n')) {
+              console.log('test', line);
               const match = line.match(newTagRegex);
               if (match === null) {
                 return;
