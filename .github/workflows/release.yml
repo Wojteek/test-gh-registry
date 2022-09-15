@@ -43,9 +43,12 @@ jobs:
           script: |
             const cwd = process.cwd();
             const { runTagCommand } = await import('${{ github.workspace }}/scripts/changesets.mjs');
+            const { createRelease } = await import('${{ github.workspace }}/scripts/release.mjs');
             const releasedPackages = await runTagCommand({ cwd, exec });
             
             core.setOutput('releasedPackages', JSON.stringify(releasedPackages));
+          
+            await Promise.all(releasedPackages.map((pkg) => createRelease(octokit, pkg, github.context));
         env:
           NODE_OPTIONS: --require="./.pnp.cjs" --experimental-loader="./.pnp.loader.mjs"
       - name: Push tags

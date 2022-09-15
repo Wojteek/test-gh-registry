@@ -1,8 +1,8 @@
 import { getPackages } from '@manypkg/get-packages';
-import { createExec } from './exec.mjs';
+import { createExec } from './utils.mjs';
 
 export async function runTagCommand({ exec, cwd }) {
-  const {packages} = await getPackages(cwd);
+  const { packages } = await getPackages(cwd);
   const execAsync = createExec(exec);
   const releasedPackages = [];
   const newTagRegex = /New tag:\s+(@[^/]+\/[^@]+|[^/]+)@(\S+)/;
