@@ -1,5 +1,11 @@
 # @wojteek/app-host
 
+## 2.2.1
+
+### Patch Changes
+
+- [`a9093e8`](https://github.com/Wojteek/test-gh-registry/commit/a9093e86f61f222086512bffbf49c5af6d467c7c) Thanks [@Wojteek](https://github.com/Wojteek)! - fsaf asfsa fsafsa f2424 test
+
 ## 2.2.0
 
 ### Minor Changes
