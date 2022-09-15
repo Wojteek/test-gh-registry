@@ -41,9 +41,10 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { getPackages } = require('@manypkg/get-packages') 
+            import { getPackages } from '@manypkg/get-packages';
+            
             const cwd = process.cwd();
-            const { packages, tool } = await getPackages(cwd);
+            const { packages } = await getPackages(cwd);
             const newTagRegex = /New tag:\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
             const releasedPackages = [];
             const packagesByName = new Map(packages.map((pkg) => [pkg.packageJson.name, pkg]));
@@ -59,13 +60,10 @@ jobs:
                   const pkgName = match[1];
                   const pkg = packagesByName.get(pkgName);
                   if (!pkg) {
-                    return;           
+                    return;
                   }
             
-                  releasedPackages.push(`${pkg.packageJson.name}@${pkg.packageJson.version}`);
-                },
-                stderr: (data) => {
-                  throw new Error(data.toString());
+                  releasedPackages.push(pkg);
                 },
               },
             };
@@ -83,6 +81,6 @@ jobs:
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
           echo ${{ steps.tags.outputs.releasedPackages }}
-          node ./scripts/create-release.js
+          node ./scripts/create-release.mjs
         env:
           RELEASED_PACKAGES: ${{ steps.tags.outputs.releasedPackages }}
