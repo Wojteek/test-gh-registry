@@ -17,7 +17,7 @@ export async function createRelease({ octokit, pkg, context }) {
     console.log('tagName', tagName);
     console.log(changelogEntry);
 
-    await octokit.repos.createRelease({
+    await octokit.rest.repos.createRelease({
       name: tagName,
       tag_name: tagName,
       body: changelogEntry.content,
