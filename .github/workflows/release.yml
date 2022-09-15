@@ -41,8 +41,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            import { getPackages } from '@manypkg/get-packages';
-            
+            const { getPackages } = require('@manypkg/get-packages') 
             const cwd = process.cwd();
             const { packages } = await getPackages(cwd);
             const newTagRegex = /New tag:\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
