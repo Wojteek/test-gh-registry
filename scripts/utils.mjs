@@ -1,7 +1,7 @@
 import unified from 'unified';
 import remarkParse from 'remark-parse';
 import remarkStringify from 'remark-stringify';
-import mdastToString from 'mdast-util-to-string';
+import { toString as mdastToString } from 'mdast-util-to-string';
 
 export function createExec(exec) {
   return async (command, args, options = {}) => {
@@ -40,7 +40,7 @@ export function getChangelogEntry(changelog, version) {
   for (let i = 0; i < nodes.length; i++) {
     let node = nodes[i];
     if (node.type === "heading") {
-      const stringified = mdastToString.toString(node);
+      const stringified = mdastToString(node);
       const match = stringified.toLowerCase().match(/(major|minor|patch)/);
 
       if (match !== null) {
