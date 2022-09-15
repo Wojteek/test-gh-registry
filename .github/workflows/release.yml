@@ -41,33 +41,32 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { getPackages } = require('@manypkg/get-packages') 
+            const { getPackages } = await import('@manypkg/get-packages') 
+            const { createExec } = await import('${{ github.workspace }}/scripts/gh-exec.mjs');
             const cwd = process.cwd();
             const { packages } = await getPackages(cwd);
             const newTagRegex = /New tag:\s+(@[^/]+\/[^@]+|[^/]+)@([^\s]+)/;
             const releasedPackages = [];
             const packagesByName = new Map(packages.map((pkg) => [pkg.packageJson.name, pkg]));
-            const options = {
+            const execAsync = createExec(exec);
+            const { stdout } = await execAsync('yarn', ['changeset', 'tag'], {
               cwd,
-              listeners: {
-                stdout: (data) => {
-                  const match = data.toString().match(newTagRegex);
-                  if (match === null) {
-                    return;
-                  }
+            });
             
-                  const pkgName = match[1];
-                  const pkg = packagesByName.get(pkgName);
-                  if (!pkg) {
-                    return;
-                  }
+            for (const line of stdout.split('\n')) {
+              const match = line.match(newTagRegex);
+              if (match === null) {
+                return;
+              }
             
-                  releasedPackages.push(pkg);
-                },
-              },
-            };
+              const pkgName = match[1];
+              const pkg = packagesByName.get(pkgName);
+              if (!pkg) {
+                return;
+              }
             
-            await exec.exec('yarn', ['changeset', 'tag'], options);
+              releasedPackages.push(pkg);
+            }
             
             core.setOutput('releasedPackages', JSON.stringify(releasedPackages));
         env:
