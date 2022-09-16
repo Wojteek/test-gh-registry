@@ -42,7 +42,6 @@ jobs:
         with:
           script: |
             const { runTagCommand } = await import('${{ github.workspace }}/scripts/changesets.mjs');
-            const { createRelease } = await import('${{ github.workspace }}/scripts/release.mjs');
             
             let releasedPackages = [];
             try {
@@ -51,14 +50,17 @@ jobs:
               core.warning(`changeset tag error: ${err}`);
             }
             
-            core.info(`releasedPackages: ${releasedPackages}`);
-            core.info(`hasReleasedPackages: ${!!releasedPackages.length}`);
-            
             core.setOutput('releasedPackages', JSON.stringify(releasedPackages));
             core.setOutput('hasReleasedPackages', !!releasedPackages.length);
-            await Promise.all(releasedPackages.map((pkg) => createRelease({ octokit: github, pkg, context })));
         env:
           NODE_OPTIONS: --require="./.pnp.cjs" --experimental-loader="./.pnp.loader.mjs"
+      - name: Create releases
+        if: steps.tags.outputs.hasReleasedPackages == 'true'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { createRelease } = await import('${{ github.workspace }}/scripts/release.mjs');
+            await Promise.all(releasedPackages.map((pkg) => createRelease({ octokit: github, pkg, context })));
       - name: Push tags
         if: steps.tags.outputs.hasReleasedPackages == 'true'
         run: |
