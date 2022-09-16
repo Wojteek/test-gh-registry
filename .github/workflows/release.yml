@@ -51,8 +51,8 @@ jobs:
               core.warning(`changeset tag error: ${err}`);
             }
             
-            console.log('releasedPackages', releasedPackages);
-            console.log('hasReleasedPackages', !!releasedPackages.length);
+            core.info(`releasedPackages: ${releasedPackages}`);
+            core.info(`hasReleasedPackages: ${!!releasedPackages.length}`);
             
             core.setOutput('releasedPackages', JSON.stringify(releasedPackages));
             core.setOutput('hasReleasedPackages', !!releasedPackages.length);
