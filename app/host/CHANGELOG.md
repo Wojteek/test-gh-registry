@@ -1,5 +1,11 @@
 # @wojteek/app-host
 
+## 3.0.0
+
+### Major Changes
+
+- [`dc0370f`](https://github.com/Wojteek/test-gh-registry/commit/dc0370f5f6e1f25e24c06a14609fd5aaa78d98b0) Thanks [@Wojteek](https://github.com/Wojteek)! - fas fas fasfasf asfas fsa
+
 ## 2.2.1
 
 ### Patch Changes
