@@ -60,7 +60,7 @@ jobs:
         with:
           script: |
             const { createRelease } = await import('${{ github.workspace }}/scripts/release.mjs');
-            await Promise.all(releasedPackages.map((pkg) => createRelease({ octokit: github, pkg, context })));
+            await Promise.all(${{ steps.tags.outputs.releasedPackages }}.map((pkg) => createRelease({ octokit: github, pkg, context })));
         env:
           NODE_OPTIONS: --require="./.pnp.cjs" --experimental-loader="./.pnp.loader.mjs"
       - name: Push tags
