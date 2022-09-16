@@ -41,17 +41,22 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const cwd = process.cwd();
             const { runTagCommand } = await import('${{ github.workspace }}/scripts/changesets.mjs');
             const { createRelease } = await import('${{ github.workspace }}/scripts/release.mjs');
-            const releasedPackages = await runTagCommand({ cwd, exec });
+            
+            let releasedPackages = [];
+            try {
+              releasedPackages = await runTagCommand({ cwd: process.cwd(), exec });
+            } catch(err) {
+              core.warning(`changeset tag error: ${err}`);
+            }
             
             core.setOutput('releasedPackages', JSON.stringify(releasedPackages));
-            console.log(releasedPackages);
+            core.setOutput('hasReleasedPackages', !!releasedPackages.length);
             await Promise.all(releasedPackages.map((pkg) => createRelease({ octokit: github, pkg, context })));
         env:
           NODE_OPTIONS: --require="./.pnp.cjs" --experimental-loader="./.pnp.loader.mjs"
-#      - name: Push tags
-#        if: steps.changesets.outputs.hasChangesets == 'false'
-#        run: |
-#          git push --follow-tags
+      - name: Push tags
+        if: steps.tags.outputs.hasReleasedPackages
+        run: |
+          git push --follow-tags

@@ -1,3 +1,4 @@
+// https://github.com/changesets/action/blob/main/src/run.ts
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { getChangelogEntry } from './utils.mjs';
@@ -13,9 +14,6 @@ export async function createRelease({ octokit, pkg, context }) {
     }
 
     const tagName = `${pkg.packageJson.name}@${pkg.packageJson.version}`;
-
-    console.log('tagName', tagName);
-    console.log(changelogEntry);
 
     await octokit.rest.repos.createRelease({
       name: tagName,
