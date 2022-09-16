@@ -51,12 +51,15 @@ jobs:
               core.warning(`changeset tag error: ${err}`);
             }
             
+            console.log('releasedPackages', releasedPackages);
+            console.log('hasReleasedPackages', !!releasedPackages.length);
+            
             core.setOutput('releasedPackages', JSON.stringify(releasedPackages));
             core.setOutput('hasReleasedPackages', !!releasedPackages.length);
             await Promise.all(releasedPackages.map((pkg) => createRelease({ octokit: github, pkg, context })));
         env:
           NODE_OPTIONS: --require="./.pnp.cjs" --experimental-loader="./.pnp.loader.mjs"
       - name: Push tags
-        if: steps.tags.outputs.hasReleasedPackages
+        if: steps.tags.outputs.hasReleasedPackages == 'true'
         run: |
           git push --follow-tags
