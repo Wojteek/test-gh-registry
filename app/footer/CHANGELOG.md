@@ -1,5 +1,7 @@
 # @wojteek/app-footer
 
+## 3.0.1
+
 ## 3.0.1-rc.1
 
 ## 3.0.1-rc.0
