@@ -1,0 +1,10 @@
+{
+  "mode": "pre",
+  "tag": "rc",
+  "initialVersions": {
+    "@wojteek/app-footer": "3.0.0",
+    "@wojteek/app-host": "3.0.0",
+    "@wojteek/tool-fetcher": "1.1.0"
+  },
+  "changesets": []
+}
