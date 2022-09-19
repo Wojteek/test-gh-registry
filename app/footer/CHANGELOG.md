@@ -1,5 +1,7 @@
 # @wojteek/app-footer
 
+## 0.0.0-snapshot-20220919132509
+
 ## 3.0.1
 
 ## 3.0.1-rc.1
