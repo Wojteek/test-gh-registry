@@ -33,8 +33,8 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          commit: "ci: ${{ github.ref_name }} snapshot"
-          title: "ci: ${{ github.ref_name }} snapshot"
+          commit: "ci: ${{ github.ref_name }} release"
+          title: "ci: ${{ github.ref_name }} release"
           createGithubReleases: false
           publish: yarn workspaces foreach --no-private npm publish --tolerate-republish --tag ${{ github.ref_name }}
           version: yarn changeset version --snapshot ${{ github.ref_name }}

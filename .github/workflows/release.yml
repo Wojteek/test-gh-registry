@@ -27,9 +27,9 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          commit: "ci: ${{ github.ref_name }} release"
-          title: "ci: ${{ github.ref_name }} release"
-          createGithubReleases: true
+          commit: "ci: stable release"
+          title: "ci: stable release"
+          createGithubReleases: false
           publish: yarn workspaces foreach --no-private npm publish --tolerate-republish
           version: yarn changeset version
         env:
