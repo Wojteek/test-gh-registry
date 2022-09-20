@@ -7,6 +7,11 @@ concurrency:
   group: release-${{ github.ref_name }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+  packages: write
+  pull-requests: write
+
 jobs:
   release:
     name: Release
