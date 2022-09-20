@@ -41,11 +41,11 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { runTagCommand } = await import('${{ github.workspace }}/scripts/changesets.mjs');
+            const { tagCommand } = await import('${{ github.workspace }}/scripts/bundle.mjs');
             
             let releasedPackages = [];
             try {
-              releasedPackages = await runTagCommand({ cwd: process.cwd(), exec });
+              releasedPackages = await tagCommand({ cwd: process.cwd(), exec });
             } catch(err) {
               core.warning(`changeset tag error: ${err}`);
             }
@@ -59,7 +59,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { createRelease } = await import('${{ github.workspace }}/scripts/release.mjs');
+            const { createRelease } = await import('${{ github.workspace }}/scripts/bundle.mjs');
             await Promise.all(${{ steps.tags.outputs.releasedPackages }}.map((pkg) => createRelease({ octokit: github, pkg, context })));
         env:
           NODE_OPTIONS: --require="./.pnp.cjs" --experimental-loader="./.pnp.loader.mjs"
