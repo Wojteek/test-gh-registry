@@ -1,5 +1,11 @@
 # @wojteek/tool-fetcher
 
+## 1.1.1-next.0
+
+### Patch Changes
+
+- [`f953734`](https://github.com/Wojteek/test-gh-registry/commit/f9537345f7142def0a5bcaad97f4d42da32fc2ac) Thanks [@Wojteek](https://github.com/Wojteek)! - fsa fsa patch
+
 ## 1.1.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # @wojteek/app-host
 
+## 4.0.0-next.1
+
+### Patch Changes
+
+- [`f92c15b`](https://github.com/Wojteek/test-gh-registry/commit/f92c15b98cf402b1f1bf154c44897c0cceb65406) Thanks [@Wojteek](https://github.com/Wojteek)! - fsa fas fasf asf safasf
+
+- [`2d5adb6`](https://github.com/Wojteek/test-gh-registry/commit/2d5adb6fa2a64d129751fda985fafb6f3eac090a) Thanks [@Wojteek](https://github.com/Wojteek)! - f saf afgdsgds gs patch
+
+- Updated dependencies [[`f953734`](https://github.com/Wojteek/test-gh-registry/commit/f9537345f7142def0a5bcaad97f4d42da32fc2ac)]:
+  - @wojteek/tool-fetcher@1.1.1-next.0
+
 ## 4.0.0-next.0
 
 ## 3.1.1
