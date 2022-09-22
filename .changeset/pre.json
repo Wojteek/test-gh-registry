@@ -7,6 +7,9 @@
     "@wojteek/tool-fetcher": "1.1.0"
   },
   "changesets": [
+    "eleven-apples-invent",
+    "modern-goats-burn",
+    "seven-tigers-suffer",
     "smart-hairs-joke"
   ]
 }
