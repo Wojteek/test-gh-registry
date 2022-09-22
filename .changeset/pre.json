@@ -6,5 +6,7 @@
     "@wojteek/app-host": "3.1.1",
     "@wojteek/tool-fetcher": "1.1.0"
   },
-  "changesets": []
+  "changesets": [
+    "smart-hairs-joke"
+  ]
 }

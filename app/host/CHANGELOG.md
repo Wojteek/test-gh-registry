@@ -1,5 +1,7 @@
 # @wojteek/app-host
 
+## 4.0.0-next.0
+
 ## 3.1.1
 
 ### Patch Changes
