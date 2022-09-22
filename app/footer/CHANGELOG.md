@@ -1,5 +1,11 @@
 # @wojteek/app-footer
 
+## 4.0.0
+
+### Major Changes
+
+- [`5798801`](https://github.com/Wojteek/test-gh-registry/commit/5798801626ab4625c1492b43400a0af85b3f7536) Thanks [@Wojteek](https://github.com/Wojteek)! - gsd gsd gsdgsd msjor
+
 ## 4.0.0-next.1
 
 ## 4.0.0-next.0
