@@ -41,7 +41,7 @@ jobs:
             [[ "$(jq '.mode' -r $pre_file)" != "pre" ]] && return 0 || return 1
           }
 
-          check_prerelease_file
+          #check_prerelease_file
           readonly pre_status=$?
           [[ $pre_status -eq 0 ]] && echo "make a release"
           [[ $pre_status -eq 1 ]] && echo "run changeset pre exit"
