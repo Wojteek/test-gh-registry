@@ -62,6 +62,8 @@ jobs:
           echo "::set-output name=sha::$(git rev-parse HEAD)"
       - if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: echo ${{ steps.prereleaseCommit.outputs.sha }}
+      - if: steps.prerelease.outputs.isPrereleaseMode == 'true'
+        run: github.sha = ${{ steps.prereleaseCommit.outputs.sha }}
       - name: Dump GitHub context
         if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: echo "${{ toJSON(github) }}"
