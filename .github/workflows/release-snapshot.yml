@@ -48,7 +48,7 @@ jobs:
       - name: Exit pre-release mode
         if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: |
-          echo "exit pre-release mode"
+          yarn changeset pre exit
       - name: Create
         id: changesets
         uses: changesets/action@v1
