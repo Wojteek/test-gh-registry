@@ -32,8 +32,8 @@ jobs:
         run: yarn install --immutable
       - name: Check if pre-release mode
         id: prerelease
+        continue-on-error: true
         run: |
-          set +e
           readonly pre_file="${{ github.workspace }}/.changeset/pre.json"
           
           function is_prerelease_mode() {
@@ -64,7 +64,7 @@ jobs:
       - name: Summarize
         if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: |
-          echo "### Run again the `Snapshot` workflow! :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "### Run again the workflow! :rocket:" >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.prereleaseCommit.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
       - name: Create
         id: changesets
