@@ -63,9 +63,8 @@ jobs:
       - if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: echo ${{ steps.prereleaseCommit.outputs.sha }}
       - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+        if: steps.prerelease.outputs.isPrereleaseMode == 'true'
+        run: echo "${{ toJSON(github) }}"
       - name: Create
         id: changesets
         uses: changesets/action@v1
