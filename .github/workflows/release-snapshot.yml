@@ -62,25 +62,3 @@ jobs:
           echo "::set-output name=sha::$(git rev-parse HEAD)"
       - if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: echo ${{ steps.prereleaseCommit.outputs.sha }}
-      - name: Checkout
-        if: steps.prerelease.outputs.isPrereleaseMode == 'true'
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ steps.prereleaseCommit.outputs.sha }}
-          fetch-depth: 0
-      - name: Install
-        if: steps.prerelease.outputs.isPrereleaseMode == 'true'
-        run: yarn install --immutable
-      - name: Create
-        id: changesets
-        uses: changesets/action@v1
-        if: success()
-        with:
-          commit: "ci: ${{ github.ref_name }} release"
-          title: "ci: ${{ github.ref_name }} release"
-          createGithubReleases: false
-          publish: yarn workspaces foreach --no-private npm publish --tolerate-republish --tag ${{ github.ref_name }}
-          version: yarn changeset version --snapshot ${{ github.ref_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
