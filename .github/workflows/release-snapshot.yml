@@ -41,7 +41,12 @@ jobs:
 
           is_prerelease_mode
           readonly pre_status=$?
-          [[ $pre_status -eq 0 ]] && echo "::set-output name=isPrereleaseMode::true" || echo "::set-output name=isPrereleaseMode::false"
+          if test $pre_status -eq 0
+          then
+            echo "::set-output name=isPrereleaseMode::true"
+          else
+            echo "::set-output name=isPrereleaseMode::false"
+          fi
       - name: Exit pre-release mode
         id: prereleaseCommit
         if: steps.prerelease.outputs.isPrereleaseMode == 'true'
