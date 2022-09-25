@@ -50,7 +50,7 @@ jobs:
           yarn changeset pre exit
           readonly pre_exit_status=$?
           if [ $pre_exit_status -ne 0 ]; then
-            echo "`changeset pre exit` command retured error"
+            echo "`changeset pre exit` command returned error"
             exit 1
           fi
           git config user.name "github-actions[bot]"
