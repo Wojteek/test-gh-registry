@@ -1,5 +1,7 @@
 # @wojteek/app-footer
 
+## 0.0.0-snapshot-20220925234230
+
 ## 4.0.0
 
 ### Major Changes

@@ -1,5 +1,16 @@
 # @wojteek/app-host
 
+## 0.0.0-snapshot-20220925234230
+
+### Major Changes
+
+- [`0309327`](https://github.com/Wojteek/test-gh-registry/commit/0309327e951e89fbe77df0de18b7129bb9d9e02a) Thanks [@Wojteek](https://github.com/Wojteek)! - fas fasf asfasf
+
+### Patch Changes
+
+- Updated dependencies [[`0309327`](https://github.com/Wojteek/test-gh-registry/commit/0309327e951e89fbe77df0de18b7129bb9d9e02a)]:
+  - @wojteek/tool-fetcher@0.0.0-snapshot-20220925234230
+
 ## 4.0.0
 
 ### Patch Changes
