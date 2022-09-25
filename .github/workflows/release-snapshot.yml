@@ -45,6 +45,7 @@ jobs:
           [[ $pre_status -eq 1 ]] && echo "::set-output name=isPrereleaseMode::false"
           [[ $pre_status -eq 0 ]] && echo "::set-output name=isPrereleaseMode::true"
       - name: Exit pre-release mode
+        id: prereleaseCommit
         if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: |
           yarn changeset pre exit
@@ -58,8 +59,7 @@ jobs:
           git add .
           git commit -m "chore: exit pre-release mode"
           git push origin HEAD:${GITHUB_REF#refs/heads/}
-          git rev-parse HEAD
-          echo "GITHUB_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
+          echo "::set-output name=sha::$(git rev-parse HEAD)"
       - name: Create
         id: changesets
         uses: changesets/action@v1
@@ -71,5 +71,6 @@ jobs:
           publish: yarn workspaces foreach --no-private npm publish --tolerate-republish --tag ${{ github.ref_name }}
           version: yarn changeset version --snapshot ${{ github.ref_name }}
         env:
+          GITHUB_SHA: ${{ steps.prereleaseCommit.outputs.sha }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
