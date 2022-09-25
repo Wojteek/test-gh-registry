@@ -30,6 +30,9 @@ jobs:
           cache: "yarn"
       - name: Install
         run: yarn install --immutable
+      - run: |
+          readonly pre_file="${{ github.workspace }}/.changeset/pre.json"
+          jq '.mode' -r $pre_file
       - name: Check if pre-release mode
         run: |
           set -x
