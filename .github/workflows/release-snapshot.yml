@@ -60,7 +60,6 @@ jobs:
           git commit -m "chore: exit pre-release mode"
           git push origin HEAD:${GITHUB_REF#refs/heads/}
           echo "::set-output name=sha::$(git rev-parse HEAD)"
-
       - if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: echo ${{ steps.prereleaseCommit.outputs.sha }}
       - name: Checkout
