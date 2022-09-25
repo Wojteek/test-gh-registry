@@ -44,14 +44,23 @@ jobs:
           readonly pre_status=$?
           [[ $pre_status -eq 1 ]] && echo "::set-output name=isPrereleaseMode::false"
           [[ $pre_status -eq 0 ]] && echo "::set-output name=isPrereleaseMode::true"
-        shell: bash
       - name: Exit pre-release mode
         if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: |
           yarn changeset pre exit
+          readonly pre_status=$?
+          if [ $retVal -ne 0 ]; then
+            echo "changeset pre exit retured error"
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -a -m "chore: exit pre-release mode"
+          git push
       - name: Create
         id: changesets
         uses: changesets/action@v1
+        if: success()
         with:
           commit: "ci: ${{ github.ref_name }} release"
           title: "ci: ${{ github.ref_name }} release"
