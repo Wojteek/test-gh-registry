@@ -63,7 +63,10 @@ jobs:
       - if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: echo ${{ steps.prereleaseCommit.outputs.sha }}
       - if: steps.prerelease.outputs.isPrereleaseMode == 'true'
-        run: ${{ github.sha = steps.prereleaseCommit.outputs.sha }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            context.sha = "${{ steps.prereleaseCommit.outputs.sha }}";
       - name: Dump GitHub context
         if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: echo "${{ toJSON(github) }}"
