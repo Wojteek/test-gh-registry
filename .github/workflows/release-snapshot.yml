@@ -32,6 +32,7 @@ jobs:
         run: yarn install --immutable
       - name: Check if pre-release mode
         run: |
+          set +e
           readonly pre_file="${{ github.workspace }}/.changeset/pre2.json"
           
           function is_prerelease_mode() {
