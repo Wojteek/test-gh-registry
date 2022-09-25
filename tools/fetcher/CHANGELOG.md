@@ -1,5 +1,11 @@
 # @wojteek/tool-fetcher
 
+## 0.0.0-snapshot-20220925232708
+
+### Minor Changes
+
+- [`0309327`](https://github.com/Wojteek/test-gh-registry/commit/0309327e951e89fbe77df0de18b7129bb9d9e02a) Thanks [@Wojteek](https://github.com/Wojteek)! - fas gdsg dsgsdg
+
 ## 1.1.1
 
 ### Patch Changes
