@@ -32,7 +32,6 @@ jobs:
         run: yarn install --immutable
       - name: Check if pre-release mode
         id: prerelease
-        continue-on-error: true
         run: |
           readonly pre_file="${{ github.workspace }}/.changeset/pre.json"
           
@@ -44,6 +43,7 @@ jobs:
           readonly pre_status=$?
           [[ $pre_status -eq 1 ]] && echo "::set-output name=isPrereleaseMode::false"
           [[ $pre_status -eq 0 ]] && echo "::set-output name=isPrereleaseMode::true"
+          exit 0
       - name: Exit pre-release mode
         id: prereleaseCommit
         if: steps.prerelease.outputs.isPrereleaseMode == 'true'
