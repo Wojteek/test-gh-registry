@@ -47,6 +47,7 @@ jobs:
       - name: Exit pre-release mode
         id: prereleaseCommit
         if: steps.prerelease.outputs.isPrereleaseMode == 'true'
+        shell: bash
         run: |
           yarn changeset pre exit
           readonly pre_exit_status=$?
