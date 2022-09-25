@@ -60,18 +60,15 @@ jobs:
           git commit -m "chore: exit pre-release mode"
           git push origin HEAD:${GITHUB_REF#refs/heads/}
           echo "::set-output name=sha::$(git rev-parse HEAD)"
-      - if: steps.prerelease.outputs.isPrereleaseMode == 'true'
-        run: echo ${{ steps.prereleaseCommit.outputs.sha }}
-      - if: steps.prerelease.outputs.isPrereleaseMode == 'true'
-        run: |
-          echo "GITHUB_SHA=${{ steps.prereleaseCommit.outputs.sha }}" >> $GITHUB_ENV
-      - name: Dump GitHub context
+      - name: Summarize
         if: steps.prerelease.outputs.isPrereleaseMode == 'true'
-        run: echo "${{ toJSON(github) }}"
+        run: |
+          echo "### Run again the `Snapshot` workflow! :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.prereleaseCommit.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
       - name: Create
         id: changesets
         uses: changesets/action@v1
-        if: success()
+        if: steps.prerelease.outputs.isPrereleaseMode == 'false'
         with:
           commit: "ci: ${{ github.ref_name }} release"
           title: "ci: ${{ github.ref_name }} release"
