@@ -65,7 +65,7 @@ jobs:
         if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: |
           echo "### Run again the `Snapshot` workflow! :rocket:" >> $GITHUB_STEP_SUMMARY
-          echo "The pre-release mode has been detected and disabled. >> $GITHUB_STEP_SUMMARY
+          echo "The pre-release mode has been detected and disabled." >> $GITHUB_STEP_SUMMARY
           echo "- The SHA of pushed change: ${{ steps.prereleaseCommit.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
       - name: Create
         id: changesets
