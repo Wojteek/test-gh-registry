@@ -61,6 +61,11 @@ jobs:
           git push origin HEAD:${GITHUB_REF#refs/heads/}
           echo "::set-output name=sha::$(git rev-parse HEAD)"
       - run: echo ${{ steps.prereleaseCommit.outputs.sha }}
+      - name: Checkout
+        if: steps.prerelease.outputs.isPrereleaseMode == 'true'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Create
         id: changesets
         uses: changesets/action@v1
