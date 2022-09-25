@@ -48,8 +48,8 @@ jobs:
         if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: |
           yarn changeset pre exit
-          readonly pre_status=$?
-          if [ $retVal -ne 0 ]; then
+          readonly pre_exit_status=$?
+          if [ $pre_exit_status -ne 0 ]; then
             echo "changeset pre exit retured error"
             exit 1
           fi
