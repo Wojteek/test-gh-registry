@@ -63,10 +63,8 @@ jobs:
       - if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: echo ${{ steps.prereleaseCommit.outputs.sha }}
       - if: steps.prerelease.outputs.isPrereleaseMode == 'true'
-        uses: actions/github-script@v6
-        with:
-          script: |
-            context.sha = "${{ steps.prereleaseCommit.outputs.sha }}";
+        run: |
+          echo "GITHUB_SHA=${{ steps.prereleaseCommit.outputs.sha }}" >> $GITHUB_ENV
       - name: Dump GitHub context
         if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         run: echo "${{ toJSON(github) }}"
@@ -81,6 +79,5 @@ jobs:
           publish: yarn workspaces foreach --no-private npm publish --tolerate-republish --tag ${{ github.ref_name }}
           version: yarn changeset version --snapshot ${{ github.ref_name }}
         env:
-          GITHUB_SHA: ${{ steps.prereleaseCommit.outputs.sha }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
