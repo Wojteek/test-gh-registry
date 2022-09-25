@@ -35,7 +35,7 @@ jobs:
           set -x
           readonly pre_file="${{ github.workspace }}/.changeset/pre.json"
           
-          jq
+          jq '.mode' -r $pre_file
 
           function check_prerelease_file() {
             [[ "$(jq '.mode' -r $pre_file)" != "pre" ]] && return 0 || return 1
