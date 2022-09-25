@@ -58,6 +58,7 @@ jobs:
           git add .
           git commit -m "chore: exit pre-release mode"
           git push origin HEAD:${GITHUB_REF#refs/heads/}
+          git rev-parse HEAD
           echo "GITHUB_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
       - name: Create
         id: changesets
