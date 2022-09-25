@@ -68,6 +68,9 @@ jobs:
         with:
           ref: ${{ steps.prereleaseCommit.outputs.sha }}
           fetch-depth: 0
+      - name: Install
+        if: steps.prerelease.outputs.isPrereleaseMode == 'true'
+        run: yarn install --immutable
       - name: Create
         id: changesets
         uses: changesets/action@v1
