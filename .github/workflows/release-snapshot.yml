@@ -60,6 +60,7 @@ jobs:
           git commit -m "chore: exit pre-release mode"
           git push origin HEAD:${GITHUB_REF#refs/heads/}
           echo "::set-output name=sha::$(git rev-parse HEAD)"
+      - run: echo ${{ steps.prereleaseCommit.outputs.sha }}
       - name: Create
         id: changesets
         uses: changesets/action@v1
