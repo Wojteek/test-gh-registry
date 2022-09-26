@@ -69,12 +69,13 @@ jobs:
           echo "- The SHA of pushed change: ${{ steps.prereleaseCommit.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
       - name: Check if ./.changeset/*.md files exist
         id: checkChangesets
+        if: steps.prerelease.outputs.isPrereleaseMode == 'true'
         shell: bash {0}
         run: |
           set +e
           [[ "$(find ${{ github.workspace }}/.changeset -name '*.md' ! -name README.md)" ]] && echo "::set-output name=hasFiles::true" || echo "::set-output name=hasFiles::false"
       - name: Build
-        if: steps.prerelease.outputs.isPrereleaseMode == "false" && steps.checkChangesets.outputs.hasFiles == "true"
+        if: steps.prerelease.outputs.isPrereleaseMode == 'false' && steps.checkChangesets.outputs.hasFiles == 'true'
         run: echo "build"
       - name: Create
         id: changesets
