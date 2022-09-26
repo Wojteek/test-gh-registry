@@ -75,7 +75,7 @@ jobs:
           set +e
           [[ "$(find ${{ github.workspace }}/.changeset -name '*.md' ! -name README.md)" ]] && echo "::set-output name=hasFiles::true" || echo "::set-output name=hasFiles::false"
       - name: Build
-        if: steps.prerelease.outputs.isPrereleaseMode == 'false' && steps.checkChangesets.outputs.hasFiles == 'true'
+        if: steps.prerelease.outputs.isPrereleaseMode == 'false' && steps.checkChangesets.outputs.hasFiles == 'false'
         run: echo "build"
       - name: Create
         id: changesets
